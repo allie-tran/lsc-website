@@ -1,0 +1,25 @@
+{% extends "juice/templates/index.html" %}
+
+{% block footer %}
+<footer>
+     <small class="subtext">
+        © 2026 Lifelog Search Challenge (LSC). All rights reserved.
+    </small>
+</footer>
+{% endblock footer %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block hero %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ get_url(path="carbon.css") }}">
+<link rel="stylesheet" href="{{ get_url(path="custom.css") }}">
+{% endblock head %}
+
+{% block font %}
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+{% endblock font %}
