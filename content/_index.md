@@ -4,11 +4,9 @@ sort_by = "weight"
 +++
 
 
----
-
 LSC 2026 is a full-day workshop held in conjunction with the **ACM ICMR 2026** conference in Amsterdam, The Netherlands. As a highly interactive forum, LSC is dedicated to the design, development, and evaluation of interactive lifelog retrieval systems.
 
-![](/images/lsc24.jpg)
+![](./images/lsc24.jpg)
 
 The **9th annual Lifelog Search Challenge (LSC'26)** will take place during the **ACM ICMR'26** conference in **Amsterdam, The Netherlands** in June 2026. The LSC is a participation workshop where teams compete to develop leading-edge retrieval tools for personal lifelog data. As with all previous versions, LSC'26 is a highly interactive and entertaining event where participants write and present research papers and evaluate their search engines in a real-time competition.
 

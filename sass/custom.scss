@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  height: 32px;
   padding: 20px 40px;
+  height: 32px;
   background-color: var(--primary-color);
   overflow-x: hidden;
 
@@ -12,6 +12,19 @@
     bottom: 20px;
     cursor: pointer;
   }
+}
+
+
+@media screen and (max-width: 1120px) {
+    .hero {
+        height: 72px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero {
+        height: 100px;
+    }
 }
 
 .logo {
@@ -29,4 +42,49 @@
     color: #F1ECCE;
     text-decoration: underline;
   }
+}
+
+@media (prefers-color-scheme: dark) {
+    .content blockquote {
+        background-color: #504e55;
+    }
+}
+
+.giallo-l {
+    display: inline-block;
+    min-height: 1lh;
+    width: 100%;
+}
+.giallo-ln {
+    display: inline-block;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0.4em;
+    min-width: 3ch;
+    text-align: right;
+    opacity: 0.8;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    opacity: 0.5;
+    margin: 20px 0;
+}
+
+img {
+    border-radius: 8px;
+}
+
+
+h1 {
+    font-size: 1.802rem;
+}
+
+h2 {
+    font-size: 1.602rem;
+}
+
+h3 {
+    font-size: 1.424rem;
 }

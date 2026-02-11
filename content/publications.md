@@ -1,6 +1,6 @@
 +++
 title = "Publications/Cites"
-description = "📚 Key publications and resources"
+description = "Key publications and resources"
 weight = 2
 +++
 

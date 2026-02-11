@@ -15,7 +15,6 @@ In the meantime, 18 months of the dataset used in LSC'22/23/24/25 is available f
 * **Metadata**: For the collection, consisting of textual metadata representing time and locations, etc.
 * **Visual Concepts**: Extracted from the non-redacted version of the visual dataset.
 
----
 
 ## Supplementary Data
 
@@ -29,7 +28,6 @@ Please cite the following papers if you use these:
 * Ly-Duyen Tran, Dongyun Nie, Liting Zhou, Binh Nguyen, and Cathal Gurrin. 2023. VAISL: Visual-Aware Identification of Semantic Locations in Lifelog. In MultiMedia Modeling: 29th International Conference, MMM 2023, Bergen, Norway, January 9–12, 2023, Proceedings, Part II. Springer-Verlag, Berlin, Heidelberg, 659–670. [https://doi.org/10.1007/978-3-031-27818-1_54](https://doi.org/10.1007/978-3-031-27818-1_54)
 * Ahmed Alateeq, Mark Roantree, and Cathal Gurrin. 2023. Voxento 4.0: A More Flexible Visualisation and Control for Lifelogs. In Proceedings of the 6th Annual ACM Lifelog Search Challenge (LSC '23). Association for Computing Machinery, New York, NY, USA, 7–12. [https://doi.org/10.1145/3592573.3593097](https://doi.org/10.1145/3592573.3593097)
 
----
 
 ## Access
 
