@@ -28,8 +28,9 @@ Since LSC'26 features multiple submission tracks, please follow the specific gui
 
 # Submission Portal
 
-The submission system is open soon.
-<!-- *(Note: Link to be updated: [https://easychair.org/conferences/?conf=lsc26](https://easychair.org/conferences/?conf=lsc26))* -->
+The submission system is open on [OpenReview](https://openreview.net/group?id=ACM.org/ICMR/2026/Workshop/LSC).
+
+Make sure to have a **registered account on OpenReview** and follow the instructions to submit your paper to the appropriate track.
 
 > **Publication Notice:** The official publication date is the date the proceedings are made available in the ACM Digital Library. Please take this into consideration if you are seeking to protect any IP arising from your research.
 

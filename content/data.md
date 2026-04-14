@@ -29,12 +29,17 @@ Please cite the following papers if you use these:
 * Ahmed Alateeq, Mark Roantree, and Cathal Gurrin. 2023. Voxento 4.0: A More Flexible Visualisation and Control for Lifelogs. In Proceedings of the 6th Annual ACM Lifelog Search Challenge (LSC '23). Association for Computing Machinery, New York, NY, USA, 7–12. [https://doi.org/10.1145/3592573.3593097](https://doi.org/10.1145/3592573.3593097)
 
 
-## Access
+## Access {#access}
 
-> For access to the full dataset, please email either:
-> * cathal.gurrin@dcu.ie
-> * allie.tran@dcu.ie
+> Due to the sensitive nature of the data, access to the LSC'26 dataset is restricted to registered participants who have signed the necessary agreements to ensure ethical use and compliance with data protection regulations.
 >
+> For access to the dataset, please fill in the following forms:
+>
+> [LSC2026 Organisation Agreement Form](../documents/LSC2026_Organisation_Agreement_Form.docx)
+> * The research team leader must sign this form on behalf of the organisation to which the participants belong. This form should be sent to **both** of the following email addresses: [cathal.gurrin@dcu.ie](mailto:cathal.gurrin@dcu.ie) and [allie.tran@dcu.ie](mailto:allie.tran@dcu.ie).
+>
+> [LSC2026 Individual Agreement Form](../documents/LSC2026_Individual_Agreement_Form.docx)
+> * Every team member who intends to use the LSC data collection must sign an individual agreement. These documents should be kept on file by your own organisation rather than sent to the organisers, unless requested at a later date.
 >
 
 ## Citation
