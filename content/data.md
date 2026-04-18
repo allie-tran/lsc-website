@@ -49,7 +49,7 @@ For referencing the LSC'26 dataset in publications, please use the following cit
 ```bibtex
 @inproceedings{LSC26,
     author = {Gurrin, Cathal and Zhou, Liting and Healy, Graham and Tran, Allie and Rossetto, Luca and Bailer, Werner and Dang-Nguyen, Duc-Tien and Hodges, Steve and \TH{}\'{o}r J\'{o}nsson, Bj\"{o}rn and Tran, Minh-Triet and Sch\"{o}ffmann, Klaus},
-    title = {Introduction to the 8th Annual Lifelog Search Challenge, LSC'26},
+    title = {Introduction to the 9th Annual Lifelog Search Challenge, LSC'26},
     year = {2026},
     publisher = {Association for Computing Machinery},
     address = {New York, NY, USA},
