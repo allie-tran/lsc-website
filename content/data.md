@@ -6,10 +6,7 @@ weight = 1
 
 # LSC'26 Dataset
 
-> LSC'26 will use an **expanded dataset** compared to previous years, featuring four years of rich multimodal lifelog data, including wearable camera images, biometrics, activities, and locations.
-> The dataset is currently being finalised and will be made available to registered participants closer to the submission deadline. Check [News](../news/) for updates.
-
-In the meantime, 18 months of the dataset used in LSC'22/23/24/25 is available for download. The dataset consists of three password protected files:
+The LSC'26 will reuse the same 18 months of the dataset that used in LSC'22/23/24/25, which is available for download. The dataset consists of three password protected files:
 
 * **Core Image Dataset**: Wearable camera images, fully redacted and anonymised in 1024 x 768 resolution, captured using a Narrative Clip device. These images were collected during 2019-2020. All faces and readable text have been removed, as well as certain scenes and activities manually filtered out to respect local privacy requirements.
 * **Metadata**: For the collection, consisting of textual metadata representing time and locations, etc.
@@ -42,6 +39,11 @@ Please cite the following papers if you use these:
 > * Every team member who intends to use the LSC data collection must sign an individual agreement. These documents should be kept on file by your own organisation rather than sent to the organisers, unless requested at a later date.
 >
 
+The dataset is available at [https://huggingface.co/datasets/icmr-lsc/lsc22-25/](https://huggingface.co/datasets/icmr-lsc/lsc22-25/). Please note that you will need to have the previously mentioned forms completed and submitted to the organisers. Access is granted on a case-by-case basis, and the password to unzip the files will be provided via email.
+
+
+
+
 ## Citation
 
 For referencing the LSC'26 dataset in publications, please use the following citation:
@@ -57,9 +59,16 @@ For referencing the LSC'26 dataset in publications, please use the following cit
     keywords = {benchmarking, interactive retrieval systems, lifelog},
     location = {Amsterdam, Netherlands},
     series = {ICMR '26}
+    doi = {10.1145/3805622.3811234}
 }
 
 ```
+
+# Expanded Dataset for LSC'27
+
+We are in the process of finalising the expanded dataset for LSC'27, which will include additional years of data. A sample of the expanded dataset can be found at [https://huggingface.co/datasets/icmr-lsc/lsc27](https://huggingface.co/datasets/icmr-lsc/lsc27). The same access requirements apply for this.
+
+The final dataset will follow the same structure and is expected to be released in summer 2026.
 
 ---
 

@@ -12,6 +12,7 @@ weight = 0
 
 # Updates
 
+* 28/04/2026: We have decided to reuse the old dataset to allow more time for the participants to prepare for the new format.
 * **14/04/2026**: *A preview* of the LSC'26 dataset is now available for download. Check [Data](../data/#access) for details.
     + This contains 18 months of the dataset used in LSC'22/23/24/25, 
     + plus 5 more months of new data
