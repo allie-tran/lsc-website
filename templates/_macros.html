@@ -7,15 +7,27 @@
 </a>
 
 <nav>
-    {% for page in section.pages %}
-    {% set exclude_menu = config.extra.juice_exclude_menu | default(value=[]) %}
-    {% if exclude_menu is not containing(page.title) %}
-    <a class="nav-item subtitle-text" href="{{ page.permalink | safe }}">{{ page.title }}</a>
-    {% endif %}
-    {% endfor %}
-    {% if config.extra.juice_extra_menu %}
-        {% for menu in config.extra.juice_extra_menu %}
-        <a class="nav-item subtitle-text" href="{{ menu.link | safe }}">{{ menu.title }}</a>
+    {% if config.extra.nav_groups %}
+        {% for group in config.extra.nav_groups %}
+            {% if group.items %}
+            <div class="nav-dropdown">
+                <span class="nav-item subtitle-text nav-dropdown-toggle">{{ group.title }} ▾</span>
+                <div class="nav-dropdown-menu">
+                    {% for item in group.items %}
+                    <a class="nav-dropdown-item" href="{{ get_url(path=item.link) | safe }}">{{ item.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <a class="nav-item subtitle-text" href="{{ get_url(path=group.link) | safe }}">{{ group.title }}</a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for page in section.pages %}
+        {% set exclude_menu = config.extra.juice_exclude_menu | default(value=[]) %}
+        {% if exclude_menu is not containing(page.title) %}
+        <a class="nav-item subtitle-text" href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        {% endif %}
         {% endfor %}
     {% endif %}
 </nav>

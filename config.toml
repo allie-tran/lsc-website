@@ -20,3 +20,40 @@ dark_theme = "github-dark"
 # Put all your custom variables here
 juice_logo_name = "LSC'26 at ICMR'26"
 juice_logo_path = ""
+
+[[extra.nav_groups]]
+title = "News"
+link = "@/news.md"
+
+[[extra.nav_groups]]
+title = "Research"
+[[extra.nav_groups.items]]
+title = "Data"
+link = "@/data.md"
+[[extra.nav_groups.items]]
+title = "Publications/Cites"
+link = "@/publications.md"
+
+[[extra.nav_groups]]
+title = "CFP"
+[[extra.nav_groups.items]]
+title = "CFP"
+link = "@/cfp.md"
+[[extra.nav_groups.items]]
+title = "Submission"
+link = "@/submission.md"
+[[extra.nav_groups.items]]
+title = "Reviewer Guidelines"
+link = "@/reviewer_guidelines.md"
+
+[[extra.nav_groups]]
+title = "Programme"
+[[extra.nav_groups.items]]
+title = "Schedule"
+link = "@/schedule.md"
+[[extra.nav_groups.items]]
+title = "Results"
+link = "@/results.md"
+[[extra.nav_groups.items]]
+title = "People"
+link = "@/people.md"
