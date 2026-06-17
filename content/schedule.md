@@ -14,17 +14,17 @@ This is a preliminary schedule and may be subject to adjustments.
 | **09:00 - 09:15** | Welcome & Workshop Introduction |
 | **09:15 - 10:15** | **General Track: Long Presentations (4 Papers)** |
 | **10:15 - 10:30** | **Search System Track: Short Presentations** |
-| **10:30 - 10:45** | Coffee Break |
-| **10:45 - 12:00** | **Search System Track: Short Presentations** |
+| **10:30 - 11:00** | Coffee Break |
+| **11:00 - 12:00** | **Search System Track: Short Presentations** |
 | --- | --- |
 | **12:00 - 13:00** | Lunch Break |
 | --- | --- |
 | **13:00 - 13:30** | System Testing & Integration |
 | **13:30 - 13:40** | Challenge Rules & Introduction |
 | **13:40 - 15:00** | **LSC Live Contest** |
-| **15:00 - 15:30** | Coffee Break |
-| **15:30 - 16:45** | **LSC Live Contest** |
-| **16:45 - 17:00** | Awards & Closing Remarks |
+| **15:30 - 16:00** | Coffee Break |
+| **16:00 - 16:45** | **LSC Live Contest** |
+| **16:45 - 17:30** | Awards & Closing Remarks |
 
 ---
 
@@ -97,3 +97,11 @@ This is a preliminary schedule and may be subject to adjustments.
 
 **lifeXplore 2026 - Lifelog Retrieval with Multilingual Vision-Language Encoders**.
 *Presenter:* Klaus Schoeffmann
+
+---
+
+# Zoom Details
+
+Check your email for the Zoom link to join the workshop.
+Please make sure that you name yourself with your team name to facilitate the contest and Q&A sessions.
+
