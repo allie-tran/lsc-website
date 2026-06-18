@@ -17,7 +17,7 @@ The LSC'26 will reuse the same 18 months of the dataset that used in LSC'22/23/2
 
 In addition to the official LSC'26 dataset, we recommend the use of the following supplementary resources to enhance retrieval performance:
 
-* **VAISL**: A supplementary metadata file, provided by Tran et al. for the LSC’23 campaign, contains semantic names for lifelogger location (e.g., ‘home’, ‘Dublin City University’, ‘Zurich Airport’, etc.). [Download Link](https://www.dropbox.com/scl/fi/5m3bz6ixkhchzzo5b3fzd/vaisl_gps.csv)
+* **VAISL**: A supplementary metadata file, provided by Tran et al. for the LSC’23 campaign, contains semantic names for lifelogger location (e.g., ‘home’, ‘Dublin City University’, ‘Zurich Airport’, etc.). [Request here](https://huggingface.co/datasets/icmr-lsc/lsc22-25/resolve/main/VAISL_metadata.csv).
 * **Additional flight data**: Flight locations as [departing airport, arrival airport] pairs are provided by the Voxento developer, who was also a participant in LSC’23. [Download Link](https://lifelogsearch.org/lsc/resources/airplane_location_label.csv.zip)
 
 Please cite the following papers if you use these:

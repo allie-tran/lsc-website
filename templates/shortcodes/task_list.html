@@ -1,0 +1,60 @@
+{% set task_data = load_data(path="static/lsc26-tasks.json") %}
+{% set tasks = task_data.tasks | filter(attribute="ran", value=true) %}
+{% set n_kis = tasks | filter(attribute="type", value="KIS") | length %}
+{% set n_avs = tasks | filter(attribute="type", value="AVS") | length %}
+{% set n_qa  = tasks | filter(attribute="type", value="QA")  | length %}
+
+<div class="task-filters">
+  <button class="task-filter-btn active" data-filter="ALL">All ({{ tasks | length }})</button>
+  <button class="task-filter-btn" data-filter="KIS">KIS ({{ n_kis }})</button>
+  <button class="task-filter-btn" data-filter="AVS">AVS ({{ n_avs }})</button>
+  <button class="task-filter-btn" data-filter="QA">QA ({{ n_qa }})</button>
+  <a class="download-btn" href="{{ config.base_url | safe }}/lsc26-tasks.json" download="lsc26-tasks.json">↓ Download JSON</a>
+</div>
+
+<div class="task-list">
+{% for task in tasks %}
+<div class="task-card" data-type="{{ task.type }}">
+  <div class="task-card-header">
+    <span class="task-id">{{ task.id }}</span>
+    <span class="task-badge badge-{{ task.type }}">{{ task.type }}</span>
+    <span class="task-duration">{{ task.duration_min }} min</span>
+  </div>
+
+  <p>{{ task.query }}</p>
+
+  {% if task.hints | length > 1 %}
+  <details>
+    <summary>Progressive hints ({{ task.hints | length }})</summary>
+    <ol>
+      {% for hint in task.hints %}<li>{{ hint }}</li>{% endfor %}
+    </ol>
+  </details>
+  {% endif %}
+
+  {% if task.groundtruth.type == "text" %}
+    <p>{{ task.groundtruth.label }}: {% for ans in task.groundtruth.answers %}<span class="qa-answer">{{ ans }}</span>{% endfor %}</p>
+  {% elif task.groundtruth.type == "images" %}
+    <details>
+      <summary>{{ task.groundtruth.label }} ({{ task.groundtruth.items | length }})</summary>
+      <ul>
+        {% for img in task.groundtruth.items %}<li><code>{{ img }}</code></li>{% endfor %}
+      </ul>
+    </details>
+  {% endif %}
+</div>
+{% endfor %}
+</div>
+
+<script>
+document.querySelectorAll('.task-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.task-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.task-card').forEach(card => {
+      card.style.display = (filter === 'ALL' || card.dataset.type === filter) ? '' : 'none';
+    });
+  });
+});
+</script>

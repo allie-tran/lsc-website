@@ -1,0 +1,270 @@
+<div class="results-section" id="leaderboard">
+
+  <div class="view-tabs">
+    <button class="view-tab active" data-view="chart-best">Chart (Best per Team)</button>
+    <button class="view-tab" data-view="table-best">Details (Best per Team)</button>
+    <button class="view-tab" data-view="chart-all">Chart (All Users)</button>
+    <button class="view-tab" data-view="table-all">Details (All Users)</button>
+  </div>
+
+  <div id="view-chart-best" class="view-panel active">
+    <p class="view-note">Best participant per team, sorted by total score.</p>
+    <div id="bar-chart-wrap"><canvas id="bar-chart"></canvas></div>
+  </div>
+  <div id="view-table-best" class="view-panel">
+    <p class="view-note">Best participant per team (highest total). Click a column header to sort.</p>
+    <div class="lb-table-wrap" id="best-wrap"><p>Loading…</p></div>
+  </div>
+  <div id="view-chart-all" class="view-panel">
+    <p class="view-note">All 32 participants, sorted by total score.</p>
+    <div id="bar-chart-all-wrap"><canvas id="bar-chart-all"></canvas></div>
+  </div>
+  <div id="view-table-all" class="view-panel">
+    <p class="view-note">All 32 participants. Click a column header to sort.</p>
+    <div class="lb-table-wrap" id="all-wrap"><p>Loading…</p></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const CSV_URL = "{{ config.base_url | safe }}/scores-lsc26.csv";
+  const CLR = { KIS: "#c060e0", AVS: "#4da8da", QA: "#e8883a" };
+
+  const COLS = [
+    { key: "rank",  label: "Rank" },
+    { key: "team",  label: "Team / Participant", numeric: false },
+    { key: "KIS",   label: "KIS",  numeric: true },
+    { key: "AVS",   label: "AVS",  numeric: true },
+    { key: "QA",    label: "QA",   numeric: true },
+    { key: "total", label: "Total", numeric: true },
+  ];
+
+  let allData = [], bestData = [];
+  const ss = {
+    all:  { key: "total", asc: false },
+    best: { key: "total", asc: false },
+  };
+
+  function parseCSV(text) {
+    return text.trim().split("\n").slice(1).map(line => {
+      const parts = [];
+      let cur = "", inQ = false;
+      for (const c of line) {
+        if (c === '"') inQ = !inQ;
+        else if (c === "," && !inQ) { parts.push(cur); cur = ""; }
+        else cur += c;
+      }
+      parts.push(cur);
+      return { task: parts[1], group: parts[2], team: parts[3], score: parseFloat(parts[4]) || 0 };
+    });
+  }
+
+  function aggregate(rows) {
+    const m = new Map();
+    rows.forEach(r => {
+      if (!m.has(r.team)) m.set(r.team, { team: r.team, KIS: 0, AVS: 0, QA: 0 });
+      const e = m.get(r.team);
+      if (r.group === "LSC_KIS") e.KIS += r.score;
+      else if (r.group === "LSC_AVS") e.AVS += r.score;
+      else if (r.group === "LSC_QA") e.QA += r.score;
+    });
+    const entries = Array.from(m.values());
+    const maxKIS = Math.max(...entries.map(e => e.KIS));
+    const maxAVS = Math.max(...entries.map(e => e.AVS));
+    const maxQA  = Math.max(...entries.map(e => e.QA));
+    return entries.map(e => {
+      const KIS = maxKIS > 0 ? (e.KIS / maxKIS) * 1000 : 0;
+      const AVS = maxAVS > 0 ? (e.AVS / maxAVS) * 1000 : 0;
+      const QA  = maxQA  > 0 ? (e.QA  / maxQA)  * 1000 : 0;
+      return { team: e.team, KIS, AVS, QA, total: KIS + AVS + QA };
+    });
+  }
+
+  function baseTeam(name) {
+    const m = name.match(/^(.*?)\s*\d+$/);
+    return m ? m[1].trim() : name;
+  }
+
+  function bestPerTeam(all) {
+    const grp = new Map();
+    all.forEach(row => {
+      const key = baseTeam(row.team).toLowerCase();
+      if (!grp.has(key) || row.total > grp.get(key).total)
+        grp.set(key, { ...row, team: baseTeam(row.team) });
+    });
+    return Array.from(grp.values());
+  }
+
+  function sorted(data, key, asc) {
+    return [...data].sort((a, b) => {
+      const va = a[key], vb = b[key];
+      return typeof va === "number"
+        ? (asc ? va - vb : vb - va)
+        : (asc ? va.localeCompare(vb) : vb.localeCompare(va));
+    });
+  }
+
+  function fmt(n) { return typeof n === "number" ? n.toFixed(1) : n; }
+
+  function renderTable(data, wrapId, stateKey) {
+    const { key: sk, asc } = ss[stateKey];
+    const ordered = sorted(data, sk, asc);
+    const byTotal = sorted(data, "total", false);
+    const rankMap = new Map(byTotal.map((r, i) => [r.team, i + 1]));
+    const wrap = document.getElementById(wrapId);
+
+    let h = `<table class="lb-table"><thead><tr>`;
+    COLS.forEach(col => {
+      const arrow = col.key === sk ? (asc ? " ▲" : " ▼") : "";
+      h += `<th data-key="${col.key}">${col.label}<span class="sa">${arrow}</span></th>`;
+    });
+    h += `</tr></thead><tbody>`;
+    ordered.forEach(row => {
+      const rank = rankMap.get(row.team);
+      const cls = rank <= 3 ? ` class="r${rank}"` : "";
+      h += `<tr${cls}>`;
+      h += `<td class="rc">${rank <= 3 ? ["🥇","🥈","🥉"][rank-1] : rank}</td>`;
+      h += `<td>${row.team}</td>`;
+      h += `<td class="num">${fmt(row.KIS)}</td>`;
+      h += `<td class="num">${fmt(row.AVS)}</td>`;
+      h += `<td class="num">${fmt(row.QA)}</td>`;
+      h += `<td class="num">${fmt(row.total)}</td>`;
+      h += `</tr>`;
+    });
+    h += `</tbody></table>`;
+    wrap.innerHTML = h;
+
+    wrap.querySelectorAll("th[data-key]").forEach(th => {
+      th.addEventListener("click", () => {
+        const k = th.dataset.key;
+        ss[stateKey].asc = ss[stateKey].key === k ? !ss[stateKey].asc : (k === "team");
+        ss[stateKey].key = k;
+        renderTable(data, wrapId, stateKey);
+      });
+    });
+  }
+
+  const _meta = {};
+
+  function drawChart(data, canvasId, hoveredIdx = -1) {
+    const ordered = sorted(data, "total", false);
+    const canvas  = document.getElementById(canvasId);
+    const W       = canvas.parentElement.clientWidth || 700;
+    const ROW_H = 30, LABEL_W = 155, PAD_T = 48, PAD_B = 16, PAD_R = 16;
+    const BAR_AREA = W - LABEL_W - PAD_R;
+    const H = PAD_T + ordered.length * ROW_H + PAD_B;
+    const maxScore = Math.max(...ordered.map(r => r.total), 1);
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d");
+    _meta[canvasId] = { data, ordered, PAD_T, ROW_H, W, H, LABEL_W, BAR_AREA, maxScore };
+
+    ctx.fillStyle = "#1e1e1e";
+    ctx.fillRect(0, 0, W, H);
+
+    [["KIS", CLR.KIS], ["AVS", CLR.AVS], ["QA", CLR.QA]].forEach(([label, color], li) => {
+      const lx = LABEL_W + li * 72;
+      ctx.fillStyle = color; ctx.fillRect(lx, 14, 15, 14);
+      ctx.fillStyle = "#cccccc";
+      ctx.font = "bold 13px 'Fira Sans', sans-serif";
+      ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText(label, lx + 20, 21);
+    });
+
+    ordered.forEach((row, i) => {
+      const y = PAD_T + i * ROW_H, barH = ROW_H - 5;
+      if (i === hoveredIdx) { ctx.fillStyle = "rgba(255,255,255,0.07)"; ctx.fillRect(0, y - 1, W, ROW_H); }
+      ctx.fillStyle = i === hoveredIdx ? "#ffffff" : "#cccccc";
+      ctx.font = (i === hoveredIdx ? "bold " : "") + "12px 'Fira Sans', sans-serif";
+      ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      let label = row.team;
+      while (ctx.measureText(label + "…").width > LABEL_W - 8 && label.length > 2) label = label.slice(0, -1);
+      if (label !== row.team) label += "…";
+      ctx.fillText(label, LABEL_W - 6, y + barH / 2);
+      let bx = LABEL_W;
+      [["KIS", CLR.KIS], ["AVS", CLR.AVS], ["QA", CLR.QA]].forEach(([key, color]) => {
+        const bw = (row[key] / maxScore) * BAR_AREA;
+        if (bw > 0.5) { ctx.fillStyle = color; ctx.fillRect(bx, y + 1, bw, barH); bx += bw; }
+      });
+    });
+
+    if (hoveredIdx >= 0 && hoveredIdx < ordered.length) {
+      const row = ordered[hoveredIdx];
+      const rowY = PAD_T + hoveredIdx * ROW_H;
+      const lines = [
+        { text: row.team,                        bold: true,  color: "#ffffff" },
+        { text: "KIS   " + row.KIS.toFixed(1),   bold: false, color: CLR.KIS  },
+        { text: "AVS   " + row.AVS.toFixed(1),   bold: false, color: CLR.AVS  },
+        { text: "QA    " + row.QA.toFixed(1),    bold: false, color: CLR.QA   },
+        { text: "Total " + row.total.toFixed(1), bold: false, color: "#eeeeee" },
+      ];
+      const lineH = 17, pad = 9;
+      ctx.font = "12px monospace";
+      const tipW = Math.max(...lines.map(l => ctx.measureText(l.text).width)) + pad * 2 + 4;
+      const tipH = lines.length * lineH + pad * 2;
+      let tx = LABEL_W + (row.total / maxScore) * BAR_AREA + 10;
+      if (tx + tipW > W - 4) tx = W - tipW - 4;
+      if (tx < LABEL_W + 4) tx = LABEL_W + 4;
+      let ty = rowY + ROW_H / 2 - tipH / 2;
+      if (ty < 4) ty = 4;
+      if (ty + tipH > H - 4) ty = H - tipH - 4;
+      ctx.fillStyle = "rgba(8,8,8,0.92)"; ctx.strokeStyle = "rgba(200,200,200,0.25)"; ctx.lineWidth = 1;
+      ctx.fillRect(tx, ty, tipW, tipH); ctx.strokeRect(tx + 0.5, ty + 0.5, tipW - 1, tipH - 1);
+      ctx.textAlign = "left"; ctx.textBaseline = "top";
+      lines.forEach((line, i) => {
+        ctx.fillStyle = line.color;
+        ctx.font = (line.bold ? "bold " : "") + "12px " + (line.bold ? "'Fira Sans', sans-serif" : "monospace");
+        ctx.fillText(line.text, tx + pad, ty + pad + i * lineH);
+      });
+    }
+  }
+
+  function addChartHover(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    let lastIdx = -1;
+    canvas.addEventListener("mousemove", e => {
+      const m = _meta[canvasId]; if (!m) return;
+      const rect = canvas.getBoundingClientRect();
+      const cy = (e.clientY - rect.top) * (canvas.height / rect.height);
+      const hov = Math.floor((cy - m.PAD_T) / m.ROW_H);
+      const idx = hov >= 0 && hov < m.ordered.length ? hov : -1;
+      if (idx !== lastIdx) { lastIdx = idx; drawChart(m.data, canvasId, idx); }
+    });
+    canvas.addEventListener("mouseleave", () => {
+      if (lastIdx !== -1) { lastIdx = -1; const m = _meta[canvasId]; if (m) drawChart(m.data, canvasId); }
+    });
+  }
+
+  document.querySelectorAll(".view-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".view-tab").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("view-" + btn.dataset.view).classList.add("active");
+      if (btn.dataset.view === "chart-best") drawChart(bestData, "bar-chart");
+      if (btn.dataset.view === "chart-all")  drawChart(allData,  "bar-chart-all");
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (document.getElementById("view-chart-best").classList.contains("active")) drawChart(bestData, "bar-chart");
+    if (document.getElementById("view-chart-all").classList.contains("active"))  drawChart(allData,  "bar-chart-all");
+  });
+
+  fetch(CSV_URL)
+    .then(r => { if (!r.ok) throw new Error(r.statusText); return r.text(); })
+    .then(text => {
+      allData  = aggregate(parseCSV(text));
+      bestData = bestPerTeam(allData);
+      renderTable(allData,  "all-wrap",  "all");
+      renderTable(bestData, "best-wrap", "best");
+      drawChart(bestData, "bar-chart");     addChartHover("bar-chart");
+      drawChart(allData,  "bar-chart-all"); addChartHover("bar-chart-all");
+    })
+    .catch(err => {
+      ["all-wrap", "best-wrap"].forEach(id => {
+        document.getElementById(id).innerHTML = `<p>Could not load scores: ${err.message}</p>`;
+      });
+      document.getElementById("bar-chart-wrap").innerHTML = `<p>Could not load scores: ${err.message}</p>`;
+    });
+})();
+</script>

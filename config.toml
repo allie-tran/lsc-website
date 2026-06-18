@@ -52,6 +52,9 @@ title = "Programme"
 title = "Schedule"
 link = "@/schedule.md"
 [[extra.nav_groups.items]]
+title = "Tasks"
+link = "@/tasks.md"
+[[extra.nav_groups.items]]
 title = "Results"
 link = "@/results.md"
 [[extra.nav_groups.items]]
