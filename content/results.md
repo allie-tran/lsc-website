@@ -33,12 +33,3 @@ This table archives all editions of the [Lifelog Search Challenge](http://lifelo
 | [2020](https://github.com/lucaro/LSC-Archive/tree/main/2020) | Dublin, Ireland (virtual) | 14 | [MySceal](https://doi.org/10.1145/3379172.3391719) |
 | [2019](https://github.com/lucaro/LSC-Archive/tree/main/2019) | Ottawa, Canada | 9 | [vitrivr](https://doi.org/10.1145/3326460.3329160) |
 | 2018 | Yokohama, Japan | 6 | [UU-DCU](https://doi.org/10.1145/3210539.3210544) |
-
-### Analysis Papers
-
-- 2022–2024: *A. Tran et al.* **The State-of-the-Art in Lifelog Retrieval: A Review of Progress at the ACM Lifelog Search Challenge Workshop 2022–2024**
-  DOI: [10.1109/ACCESS.2025.3644952](https://doi.org/10.1109/ACCESS.2025.3644952)
-- 2021: *L. Tran et al.* **Comparing Interactive Retrieval Approaches at the Lifelog Search Challenge 2021**
-  DOI: [10.1109/ACCESS.2023.3248284](https://doi.org/10.1109/ACCESS.2023.3248284)
-- 2018: *C. Gurrin et al.* **Comparing Approaches to Interactive Lifelog Search at the Lifelog Search Challenge (LSC2018)**
-  DOI: [10.3169/mta.7.46](https://doi.org/10.3169/mta.7.46)

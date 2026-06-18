@@ -33,7 +33,11 @@
   {% endif %}
 
   {% if task.groundtruth.type == "text" %}
-    <p>{{ task.groundtruth.label }}: {% for ans in task.groundtruth.answers %}<span class="qa-answer">{{ ans }}</span>{% endfor %}</p>
+  <details>
+    <summary>Correct answers</summary>
+    <p>{% for ans in task.groundtruth.answers %}<span class="qa-answer">{{ ans }}</span>{% endfor %}</p>
+    </details>
+
   {% elif task.groundtruth.type == "images" %}
     <details>
       <summary>{{ task.groundtruth.label }} ({{ task.groundtruth.items | length }})</summary>
@@ -58,3 +62,4 @@ document.querySelectorAll('.task-filter-btn').forEach(btn => {
   });
 });
 </script>
+
